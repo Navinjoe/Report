@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Generate Report</title>
+    <!-- Add Bootstrap CSS link -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Generate Report</h1>
+        
+        <!-- Form to input product ID -->
+        <form th:action="@{/report}" method="get">
+            <div class="form-group">
+                <label for="productId">Product ID:</label>
+                <input type="text" class="form-control" id="productId" name="productId" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Generate Report</button>
+        </form>
+        
+        <!-- Display report data -->
+        <div th:if="${not #lists.isEmpty(usersWithPurchases)}" class="mt-4">
+            <h2>Report Data</h2>
+            <div class="list-group">
+                <!-- Iterate over usersWithPurchases map entries and display data -->
+                <div th:each="entry : ${usersWithPurchases}" class="list-group-item">
+                    <span th:text="${entry.key?.name}"></span> - 
+                    <span th:text="${entry.value}"></span> purchases
+                </div>
+            </div>
+        </div>
+        
+        <!-- Display message if no users found with multiple purchases -->
+        <div th:if="${#lists.isEmpty(usersWithPurchases)}" class="mt-4">
+            <div class="alert alert-info" role="alert">
+                No users found with multiple purchases for the given product.
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Bootstrap JavaScript and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
